@@ -11,24 +11,27 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
+                        <th>@sortablelink('name')</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Created At</th>
+                        <th>@sortablelink('created_at')</th>
                     </tr>
                 </thead>
                 <tbody> 
-                    @foreach($users as $item)
-                    <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->email }}</td>
-                        <td>{{ $item->role_as == '0' ? 'User' : 'Admin' }}</td>
-                        <td>{{ $item->created_at->format('d/m/Y') }}</td>
-                    </tr>
-                    @endforeach
+                    @if($users->count())
+                        @foreach($users as $key => $item)
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td>{{ $item->role_as == '0' ? 'User' : 'Admin' }}</td>
+                            <td>{{ $item->created_at->format('d/m/Y') }}</td>
+                        </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
+            {!! $users->appends(\Request::except('page'))->render() !!}
         </div>
     </div>
 @endsection
