@@ -14,6 +14,7 @@
                         <th>Name</th>
                         <th>Published</th>
                         <th>Author</th>
+                        <th>Image</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -24,6 +25,9 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->published }}</td>
                         <td>{{ $item->author }}</td>
+                        <td>
+                            <img src="{{ asset('assets/uploads/book/'.$item->image) }}" class="cate-image" alt="Image here">
+                        </td>
                         <td>
                             <a href="{{ url('edit-books/'.$item->id) }}" class="btn btn-primary">Edit</a>
                             <a href="{{ url('delete-books/'.$item->id) }}" class="btn btn-danger">Delete</a>
