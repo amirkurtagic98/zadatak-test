@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\RatingController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\BookUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::get('books/{slug}', [FrontendController::class, 'bookview']);
 
 Auth::routes();
 
-Route::post('add-to-profile', [ProfileController::class, 'addBook']);
+Route::post('add-to-profile', [BookUserController::class, 'store'])->name('add-to-profile');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

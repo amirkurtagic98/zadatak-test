@@ -7,42 +7,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Book;
 use App\Models\Profile;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
-    public function addBook(Request $request)
+    public function viewprofile(Request $request) 
     {
-        $book_id = $request->input('book_id');
-
-        if(Auth::check())
+        if(request()->has('month'))
         {
-            $book_check = Book::where('id', $book_id)->first();
-
-            if($book_check)
-            {
-                if(Profile::where('book_id', $book_id)->where('user_id', Auth::id())->exists())
-                {
-                    return response()->json(['status' => $book_check->name . " Already Added to Profile!"]);
-                }
-                else
-                {
-                    $profileItem = new Profile();
-                    $profileItem->book_id = $book_id;
-                    $profileItem->user_id = Auth::id();
-                    $profileItem->save();
-                    return response()->json(['status' => $book_check->name . " Added to Profile!"]);
-                }
-            }
+            $month = $request->input('month');
+            $user = User::whereId(auth()->id())
+            ->with('books', function($query) use ($month) {
+                $query->whereMonth('book_user.created_at', $month);
+            })
+            ->first();
         }
-        else
+        else 
         {
-            return response()->json(['status' => "Login to Continue!"]);
+            $user = User::whereId(auth()->id())
+            ->with('books')
+            ->first();
         }
-    }
 
-    public function viewprofile() 
-    {
-        $profileItems = Profile::where('user_id', Auth::id())->get();
-        return view('frontend.profile', compact('profileItems'));
+        //dd($user->toArray()); 
+        
+        return view('frontend.profile', compact('user'));
     }
 }

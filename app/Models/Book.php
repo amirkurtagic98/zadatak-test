@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-    protected $table = 'books';
+
     protected $fillable = [
         'name', 
         'slug', 
@@ -16,4 +16,9 @@ class Book extends Model
         'author',
         'image',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('created_at');
+    }
 }

@@ -86,9 +86,14 @@
 
                         <div class="row mt-2">
                             <div class="col-md-9">
-                                <input type="hidden" value="{{ $books->id }}" class="books_id">
-                                <br>
-                                <button type="button" class="btn btn-primary me-3 addToProfileBtn float-start">Add to Profile <i class="fa fa-book"></i></button>
+                                <form method="POST" action="{{ route('add-to-profile') }}" id="addBookProfile">
+                                    @csrf
+                                    <input type="hidden" value="{{ $books->id }}" name="book_id">
+                                    <br>
+                                
+                                    <button type="button" class="btn btn-primary me-3 addToProfileBtn float-start">Add to Profile <i class="fa fa-book"></i></button>
+                                </form>
+                                
                             </div>
                         </div>
                     </div>
